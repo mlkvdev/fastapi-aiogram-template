@@ -1,0 +1,50 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Suhrob", email = "mlkv.dev@gmail.com" }
+]
+dependencies = [
+    "fastapi[standard]>=0.115.11",
+    "psycopg2==2.9.9; os_name == 'linux'",
+    "psycopg2-binary==2.9.9; os_name != 'linux'",
+    "asyncpg>=0.30.0",
+    "pydantic>=2.10.6",
+    "aiogram[i18n]>=3.19.0",
+    "pydantic-settings>=2.8.1",
+    "loguru>=0.7.3",
+    "phonenumbers>=9.0.1",
+    "redis>=5.2.1",
+    "sqlalchemy[asyncio]>=2.0.40",
+    "alembic>=1.15.2",
+    "aiolimiter>=1.2.1",
+    "pyjwt>=2.10.1",
+    "ipython>=9.1.0",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend"]
+
+[tool.rye.scripts]
+makemigrations = { cmd = "alembic revision --autogenerate" }
+migrate = { cmd = "alembic upgrade head" }
+extract_messages = { cmd = "pybabel extract --input-dirs=backend -o locales/messages.pot" }
+init_ru = { cmd = "pybabel init -i locales/messages.pot -d locales -D messages -l ru" }
+init_en = { cmd = "pybabel init -i locales/messages.pot -d locales -D messages -l en" }
+init_uz = { cmd = "pybabel init -i locales/messages.pot -d locales -D messages -l uz" }
+updatemessages = { cmd = "pybabel update -i locales/messages.pot -d locales" }
+compilemessages = { cmd = "pybabel compile -d locales -D messages" }

@@ -1,0 +1,41 @@
+services:
+  app:
+    build: .
+    container_name: uzmeter-bot-backend
+    entrypoint: /app/entrypoint.sh
+    env_file: .env
+    networks:
+      - app_network
+    ports:
+      - "127.0.0.1:8008:8000"
+  redis:
+    container_name: uzmeter-bot-redis
+    image: redis:6.0
+    user: redis
+    networks:
+      - app_network
+    volumes:
+      - redis_data:/data
+    command: redis-server --dir /data
+      --dbfilename dump.rdb
+      --appendonly yes
+      --appendfilename appendonly.aof
+      --slaveof no one
+  db:
+    restart: always
+    container_name: uzmeter-bot-db
+    image: "postgres:16.6"
+    hostname: "postgres-db"
+    healthcheck:
+      test: pg_isready -h localhost -U $$DB_USER
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file: .env
+    networks:
+      - app_network
+networks:
+  app_network:
+
+volumes:
+  redis_data:
+  postgres_data:
