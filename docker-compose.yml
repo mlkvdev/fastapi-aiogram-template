@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    container_name: uzmeter-bot-backend
+    container_name: fastapi-aiogram-backend
     entrypoint: /app/entrypoint.sh
     env_file: .env
     networks:
@@ -9,7 +9,7 @@ services:
     ports:
       - "127.0.0.1:8008:8000"
   redis:
-    container_name: uzmeter-bot-redis
+    container_name: fastapi-aiogram-redis
     image: redis:6.0
     user: redis
     networks:
@@ -23,7 +23,7 @@ services:
       --slaveof no one
   db:
     restart: always
-    container_name: uzmeter-bot-db
+    container_name: fastapi-aiogram-db
     image: "postgres:16.6"
     hostname: "postgres-db"
     healthcheck:
