@@ -39,3 +39,4 @@ class ThrottlingMiddleware(BaseMiddleware):
         else:
             if isinstance(event, CallbackQuery):
                 await event.answer(str("Do not flood. Wait a second!"))
+            return None
