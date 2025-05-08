@@ -12,7 +12,6 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     BOT_TOKEN: str
     BOT_WEBHOOK_SECRET: str
-    BACKEND_WEBHOOK_SECRET: str
     REDIS_URL: str
     POSTGRES_DSN: str
     POSTGRES_DSN_ASYNC: str
